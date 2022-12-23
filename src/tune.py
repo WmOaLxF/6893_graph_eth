@@ -8,11 +8,7 @@ from ray import air, tune
 from ray.tune.integration.pytorch_lightning import Callback
 from ray.tune.schedulers import PopulationBasedTraining
 
-from .config import (tune_config,
-                     data_file_name,
-                     project_id,
-                     bucket_name,
-                     init_config_name)
+from .config import data_file_name
 from .dataset import EthTransGraphDataset
 from .model import ETHGT
 

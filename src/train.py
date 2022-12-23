@@ -4,9 +4,7 @@ from sklearn.model_selection import train_test_split
 from torch_geometric.data.lightning.datamodule import LightningDataset
 import pytorch_lightning as pl
 
-from .config import (trainer_config,
-                     data_file_name,
-                     init_config_name)
+from .config import data_file_name
 from .dataset import EthTransGraphDataset
 from .model import ETHGT
 
@@ -33,10 +31,10 @@ def init_model_dataset(config, data_dir=None):
 
   return model, datamodule
 
-def train(init_config, trainer_config=trainer_config):
+def train(init_config, trainer_config):
   init_config = torch.load(init_config)
   model, datamodule = init_model_dataset(init_config, data_dir=data_path)  
   log_n_steps = len(datamodule.train_dataset) // init_config['batch_size']
   trainer = pl.Trainer(log_every_n_steps=log_n_steps, **trainer_config)
   trainer.fit(model=model, datamodule=datamodule)
-  return model
+  return model, datamodule
